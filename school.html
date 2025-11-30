@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student ERP</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Poppins, Arial;
+        background: linear-gradient(135deg, #4a00e0, #8e2de2);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    main {
+        width: 100%;
+        max-width: 450px;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        animation: fadeIn 1s ease;
+    }
+
+    h2 {
+        text-align: center;
+        animation: slideDown 0.7s ease;
+    }
+
+    label {
+        margin-top: 10px;
+        display: block;
+        font-weight: bold;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        margin-top: 5px;
+        border: 1px solid #bbb;
+        transition: 0.3s;
+    }
+
+    input:focus, select:focus {
+        box-shadow: 0 0 10px rgba(142, 45, 226, 0.5);
+        transform: scale(1.03);
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #6a00ff, #b300ff);
+        border: none;
+        color: white;
+        border-radius: 25px;
+        margin-top: 18px;
+        font-size: 17px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transform: scale(1.08);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Dashboard */
+    #dashboard strong {
+        font-size: 18px;
+        color: #7d00ff;
+    }
+
+    .card {
+        padding: 15px;
+        background: #f7f1ff;
+        border-radius: 15px;
+        margin: 10px 0;
+        animation: fadeIn 1s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<main>
+
+    <!-- PAGE 1: LOGIN -->
+    <section id="loginPage">
+        <h2>Login</h2>
+
+        <label>Username</label>
+        <input type="text" id="luser" placeholder="Enter Username" required>
+
+        <label>Password</label>
+        <input type="password" id="lpass" placeholder="Enter Password" required>
+
+        <button onclick="goToStudentInfo()">Login</button>
+    </section>
+
+    <!-- PAGE 2: STUDENT INFORMATION -->
+    <section id="studentInfoPage" class="hidden">
+        <h2>Student Information</h2>
+
+        <label>Full Name</label>
+        <input type="text" id="sname" placeholder="Enter your name">
+
+        <label>Roll Number</label>
+        <input type="text" id="sroll" placeholder="Enter roll number">
+
+        <label>Branch</label>
+        <input type="text" id="sbranch" placeholder="Enter branch">
+
+        <button onclick="goToClassSelection()">Next</button>
+    </section>
+
+    <!-- PAGE 3: CLASS SELECTION -->
+    <section id="classPage" class="hidden">
+        <h2>Select Your Class</h2>
+
+        <label>Year</label>
+        <select id="syear">
+            <option value="1st Year">1st Year</option>
+            <option value="2nd Year">2nd Year</option>
+            <option value="3rd Year">3rd Year</option>
+            <option value="4th Year">4th Year</option>
+        </select>
+
+        <label>Section</label>
+        <select id="ssection">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+
+        <button onclick="openDashboard()">Go to Dashboard</button>
+    </section>
+
+    <!-- PAGE 4: STUDENT DASHBOARD -->
+    <section id="dashboard" class="hidden">
+        <h2>Student Dashboard</h2>
+
+        <div class="card"><strong>Name:</strong> <span id="dname"></span></div>
+        <div class="card"><strong>Roll No:</strong> <span id="droll"></span></div>
+        <div class="card"><strong>Branch:</strong> <span id="dbranch"></span></div>
+        <div class="card"><strong>Year:</strong> <span id="dyear"></span></div>
+        <div class="card"><strong>Section:</strong> <span id="dsection"></span></div>
+
+        <div class="card">
+            <strong>Quiz Marks:</strong>
+            <p>Loading example data…</p>
+        </div>
+
+        <button onclick="restart()">Logout</button>
+    </section>
+
+</main>
+
+<script>
+    function goToStudentInfo() {
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("studentInfoPage").classList.remove("hidden");
+    }
+
+    function goToClassSelection() {
+        document.getElementById("studentInfoPage").classList.add("hidden");
+        document.getElementById("classPage").classList.remove("hidden");
+    }
+
+    function openDashboard() {
+        document.getElementById("classPage").classList.add("hidden");
+        document.getElementById("dashboard").classList.remove("hidden");
+
+        // Filling dashboard with values
+        document.getElementById("dname").innerText = document.getElementById("sname").value;
+        document.getElementById("droll").innerText = document.getElementById("sroll").value;
+        document.getElementById("dbranch").innerText = document.getElementById("sbranch").value;
+        document.getElementById("dyear").innerText = document.getElementById("syear").value;
+        document.getElementById("dsection").innerText = document.getElementById("ssection").value;
+    }
+
+    function restart() {
+        location.reload();
+    }
+</script>
+
+</body>
+</html>
